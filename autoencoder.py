@@ -4,13 +4,13 @@ from __future__ import print_function
 import time
 from os.path import join as pjoin
 
-import tensorflow as tf
 import numpy as np
 
-from data import fill_feed_dict_ae, read_data_sets_pretraining, read_data_sets, fill_feed_dict
+import tensorflow as tf
+from utils.data import fill_feed_dict_ae, read_data_sets_pretraining, read_data_sets, fill_feed_dict
 from flags import FLAGS
-from eval import loss_supervised, evaluation, do_eval_summary
-from utils import tile_raster_images
+from utils.eval import loss_supervised, evaluation, do_eval_summary
+from utils.utils import tile_raster_images
 
 
 class AutoEncoder(object):

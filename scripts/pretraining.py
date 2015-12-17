@@ -3,7 +3,7 @@ import shutil
 
 from flags import FLAGS
 import autoencoder
-from start_tensorboard import start
+from scripts.start_tensorboard import start
 
 
 _data_dir = FLAGS.data_dir
