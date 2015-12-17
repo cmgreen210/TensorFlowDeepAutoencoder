@@ -33,6 +33,6 @@ fi
 sudo apt-get install python-pip python-dev python-virtualenv
 
 virtualenv --system-site-packages "$VENV"
-
+source "$VENV/bin/activate"
 pip install -r requirements.txt
 pip install --upgrade "$LOC"
