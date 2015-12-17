@@ -1,0 +1,6 @@
+.idea/
+nohup.out
+*/data*
+*checkpoint*
+*.pyc
+tbpid
