@@ -33,9 +33,12 @@ flags.DEFINE_integer('image_pixels', IMAGE_PIXELS, 'Total number of pixels')
 flags.DEFINE_integer('batch_size', 100,
                      'Batch size. Must divide evenly into the dataset sizes.')
 
-flags.DEFINE_float('pre_layer1_learning_rate', 0.0001, 'Initial learning rate.')
-flags.DEFINE_float('pre_layer2_learning_rate', 0.0001, 'Initial learning rate.')
-flags.DEFINE_float('pre_layer3_learning_rate', 0.0001, 'Initial learning rate.')
+flags.DEFINE_float('pre_layer1_learning_rate', 0.0001,
+                   'Initial learning rate.')
+flags.DEFINE_float('pre_layer2_learning_rate', 0.0001,
+                   'Initial learning rate.')
+flags.DEFINE_float('pre_layer3_learning_rate', 0.0001,
+                   'Initial learning rate.')
 
 flags.DEFINE_float('supervised_learning_rate', 0.1,
                    'Supervised initial learning rate.')
@@ -43,7 +46,8 @@ flags.DEFINE_float('supervised_learning_rate', 0.1,
 flags.DEFINE_integer('pretraining_epochs', 20,
                      "Number of training epochs for pretraining layers")
 flags.DEFINE_integer('finetuning_epochs', 36,
-                     "Number of training epochs for fine tuning supervised step")
+                     "Number of training epochs for "
+                     "fine tuning supervised step")
 
 flags.DEFINE_integer('hidden1_units', 2000,
                      'Number of units in hidden layer 1.')

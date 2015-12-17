@@ -33,17 +33,6 @@ def loss_supervised(logits, labels):
   return loss
 
 
-# def loss_x_entropy(output, target):
-#   with tf.name_scope("xentropy_loss"):
-#       net_output_tf = tf.ops.convert_to_tensor(output, name='input')
-#       target_tf = tf.ops.convert_to_tensor(target, name='target')
-#       cross_entropy = -1 * tf.add(tf.mul(tf.log(target_tf, name='log_output'),
-#                                     net_output_tf),
-#                              tf.mul(tf.log(1 - target_tf),
-#                                     (1 - net_output_tf))                             )
-#       return tf.reduce_mean(cross_entropy, name='xentropy')
-
-
 def evaluation(logits, labels):
   """Evaluate the quality of the logits at predicting the label.
 
@@ -91,6 +80,7 @@ def do_eval(sess,
   precision = true_count / num_examples
   print('  Num examples: %d  Num correct: %d  Precision @ 1: %0.04f' %
         (num_examples, true_count, precision))
+
 
 def do_eval_summary(tag,
                     sess,

@@ -7,7 +7,8 @@ from os.path import join as pjoin
 import numpy as np
 
 import tensorflow as tf
-from utils.data import fill_feed_dict_ae, read_data_sets_pretraining, read_data_sets, fill_feed_dict
+from utils.data import fill_feed_dict_ae, read_data_sets_pretraining
+from utils.data import read_data_sets, fill_feed_dict
 from flags import FLAGS
 from utils.eval import loss_supervised, evaluation, do_eval_summary
 from utils.utils import tile_raster_images
@@ -34,14 +35,13 @@ class AutoEncoder(object):
               num input, hidden1 units,...hidden_n units, num logits
       sess: tensorflow session object to use
     """
-    self.__shape = shape  # [input_dim, hidden_1_dim,..., hidden_n_dim, output_dim]
+    self.__shape = shape  # [input_dim,hidden1_dim,...,hidden_n_dim,output_dim]
     self.__num_hidden_layers = len(self.__shape) - 2
 
     self.__variables = {}
     self.__sess = sess
 
     self._setup_variables()
-
 
   @property
   def shape(self):
@@ -93,7 +93,7 @@ class AutoEncoder(object):
         self[name_w] = tf.Variable(w_init,
                                    name=name_w,
                                    trainable=True)
-         # Train biases
+        # Train biases
         name_b = self._biases_str.format(i + 1)
         b_shape = (self.__shape[i + 1],)
         b_init = tf.zeros(b_shape)
@@ -101,24 +101,22 @@ class AutoEncoder(object):
 
         if i < self.__num_hidden_layers:
           # Hidden layer fixed weights (after pretraining before fine tuning)
-          self[name_w + "_fixed"] = tf.Variable(
-            tf.identity(self[name_w]),
-            name=name_w + "_fixed",
-            trainable=False
-          )
+          self[name_w + "_fixed"] = tf.Variable(tf.identity(self[name_w]),
+                                                name=name_w + "_fixed",
+                                                trainable=False)
 
           # Hidden layer fixed biases
-          self[name_b + "_fixed"] = tf.Variable(
-            tf.identity(self[name_b]),
-            name=name_b + "_fixed",
-            trainable=False
-          )
+          self[name_b + "_fixed"] = tf.Variable(tf.identity(self[name_b]),
+                                                name=name_b + "_fixed",
+                                                trainable=False)
 
           # Pretraining output training biases
           name_b_out = self._biases_str.format(i + 1) + "_out"
           b_shape = (self.__shape[i],)
           b_init = tf.zeros(b_shape)
-          self[name_b_out] = tf.Variable(b_init, trainable=True, name=name_b_out)
+          self[name_b_out] = tf.Variable(b_init,
+                                         trainable=True,
+                                         name=name_b_out)
 
   def _w(self, n, suffix=""):
     return self[self._weights_str.format(n) + suffix]
@@ -153,13 +151,7 @@ class AutoEncoder(object):
 
   @staticmethod
   def _activate(x, w, b, transpose_w=False):
-    y = tf.sigmoid(
-      tf.nn.bias_add(
-        tf.matmul(
-          x, w, transpose_b=transpose_w
-        ), b
-      )
-    )
+    y = tf.sigmoid(tf.nn.bias_add(tf.matmul(x, w, transpose_b=transpose_w), b))
     return y
 
   def pretrain_net(self, input_pl, n, is_target=False):
@@ -188,7 +180,8 @@ class AutoEncoder(object):
 
     last_output = self._activate(last_output, self._w(n), self._b(n))
 
-    out =  self._activate(last_output, self._w(n), self._b(n, "_out"), transpose_w=True)
+    out = self._activate(last_output, self._w(n), self._b(n, "_out"),
+                         transpose_w=True)
     out = tf.maximum(out, FLAGS.zero_bound)
     out = tf.minimum(out, FLAGS.one_bound)
     return out
@@ -320,7 +313,8 @@ def main_unsupervised():
                                                 flush_secs=FLAGS.flush_secs)
         summary_vars = [ae["biases{0}".format(n)], ae["weights{0}".format(n)]]
 
-        hist_summarries = [tf.histogram_summary(v.op.name, v) for v in summary_vars]
+        hist_summarries = [tf.histogram_summary(v.op.name, v)
+                           for v in summary_vars]
         hist_summarries.append(loss_summaries[i])
         summary_op = tf.merge_summary(hist_summarries)
 
@@ -352,15 +346,18 @@ def main_unsupervised():
             summary_writer.add_summary(summary_img_str)
 
             output = "| {0:>13} | {1:13.4f} | Layer {2} | Epoch {3}  |"\
-              .format(step, loss_value, n, step // num_train + 1)
+                     .format(step, loss_value, n, step // num_train + 1)
 
             print(output)
       if i == 0:
         filters = sess.run(tf.identity(ae["weights1"]))
         np.save(pjoin(FLAGS.chkpt_dir, "filters"), filters)
-        filters =tile_raster_images(X=filters.T, img_shape=(FLAGS.image_size, FLAGS.image_size),
-                                    tile_shape=(10, 10), output_pixel_vals=False)
-        filters = np.expand_dims(np.expand_dims(filters,0), 3)
+        filters = tile_raster_images(X=filters.T,
+                                     img_shape=(FLAGS.image_size,
+                                                FLAGS.image_size),
+                                     tile_shape=(10, 10),
+                                     output_pixel_vals=False)
+        filters = np.expand_dims(np.expand_dims(filters, 0), 3)
         image_var = tf.Variable(filters)
         image_filter = tf.identity(image_var)
         sess.run(tf.initialize_variables([image_var]))
@@ -376,7 +373,7 @@ def main_supervised(ae):
   with ae.session.graph.as_default():
     sess = ae.session
     input_pl = tf.placeholder(tf.float32, shape=(FLAGS.batch_size,
-                                               FLAGS.image_pixels),
+                                                 FLAGS.image_pixels),
                               name='input_pl')
     logits = ae.supervised_net(input_pl)
 
@@ -391,16 +388,19 @@ def main_supervised(ae):
     train_op, global_step = training(loss, FLAGS.supervised_learning_rate)
     eval_correct = evaluation(logits, labels_placeholder)
 
-    hist_summaries = [ae['biases{0}'.format(i + 1)] for i in xrange(ae.num_hidden_layers + 1)]
-    hist_summaries.extend([ae['weights{0}'.format(i + 1)] for i in xrange(ae.num_hidden_layers + 1)])
+    hist_summaries = [ae['biases{0}'.format(i + 1)]
+                      for i in xrange(ae.num_hidden_layers + 1)]
+    hist_summaries.extend([ae['weights{0}'.format(i + 1)]
+                           for i in xrange(ae.num_hidden_layers + 1)])
 
-    hist_summaries = [tf.histogram_summary(v.op.name + "_fine_tuning", v) for v in hist_summaries]
+    hist_summaries = [tf.histogram_summary(v.op.name + "_fine_tuning", v)
+                      for v in hist_summaries]
     summary_op = tf.merge_summary(hist_summaries)
 
-    summary_writer = tf.train.SummaryWriter(
-      pjoin(FLAGS.summary_dir, 'fine_tuning'),
+    summary_writer = tf.train.SummaryWriter(pjoin(FLAGS.summary_dir,
+                                                  'fine_tuning'),
                                             graph_def=sess.graph_def,
-      flush_secs=FLAGS.flush_secs)
+                                            flush_secs=FLAGS.flush_secs)
 
     vars_to_init = ae.get_variables_to_init(ae.num_hidden_layers + 1)
     vars_to_init.append(global_step)
@@ -430,7 +430,7 @@ def main_supervised(ae):
         summary_img_str = sess.run(
             tf.image_summary("training_images",
                              tf.reshape(input_pl,
-                                      (FLAGS.batch_size, 28, 28, 1)),
+                                        (FLAGS.batch_size, 28, 28, 1)),
                              max_images=FLAGS.batch_size),
             feed_dict=feed_dict
         )
