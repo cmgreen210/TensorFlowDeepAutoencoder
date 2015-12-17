@@ -18,6 +18,9 @@ def _check_and_clean_dir(d):
 
 
 def main():
+  if not os.path.exists(_data_dir):
+    os.mkdir(_data_dir)
+
   _check_and_clean_dir(_summary_dir)
   _check_and_clean_dir(_chkpt_dir)
 
