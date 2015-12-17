@@ -1,15 +1,13 @@
-from __future__ import absolute_import
 from __future__ import division
 from __future__ import print_function
 import time
 from os.path import join as pjoin
 
 import numpy as np
-
 import tensorflow as tf
 from utils.data import fill_feed_dict_ae, read_data_sets_pretraining
 from utils.data import read_data_sets, fill_feed_dict
-from flags import FLAGS
+from utils.flags import FLAGS
 from utils.eval import loss_supervised, evaluation, do_eval_summary
 from utils.utils import tile_raster_images
 

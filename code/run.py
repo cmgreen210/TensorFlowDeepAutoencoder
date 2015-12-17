@@ -1,9 +1,12 @@
 import os
 import shutil
 
-from flags import FLAGS
-import autoencoder
-from scripts.start_tensorboard import start
+import sys
+sys.path.append(os.path.dirname(__file__))
+
+from ae.utils.flags import FLAGS
+import ae.autoencoder as autoencoder
+from ae.utils.start_tensorboard import start
 
 
 _data_dir = FLAGS.data_dir

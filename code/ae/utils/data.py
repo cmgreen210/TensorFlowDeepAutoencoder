@@ -1,5 +1,4 @@
 """Functions for downloading and reading MNIST data."""
-from __future__ import absolute_import
 from __future__ import division
 from __future__ import print_function
 
@@ -9,9 +8,8 @@ import numpy
 
 from six.moves import urllib
 from six.moves import xrange  # pylint: disable=redefined-builtin
-from flags import *
-
-
+from flags import FLAGS
+import os
 SOURCE_URL = 'http://yann.lecun.com/exdb/mnist/'
 
 
