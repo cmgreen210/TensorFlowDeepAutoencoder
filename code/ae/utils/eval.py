@@ -1,9 +1,8 @@
-from __future__ import absolute_import
 from __future__ import division
 from __future__ import print_function
 
 from flags import *
-from utils.data import fill_feed_dict as fill_feed_dict
+from data import fill_feed_dict as fill_feed_dict
 
 
 def loss_supervised(logits, labels):
