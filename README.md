@@ -4,7 +4,7 @@
    <img src="filters_1.png" alt="Some First Layer Filters"/>
 </p>
 <p align="center">
-A selection of the first layer weight filters learned during the pretraining phase
+A selection of first layer weight filters learned during the pretraining
 </p>
 
 ##Introduction
