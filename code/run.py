@@ -1,9 +1,6 @@
 import os
 import shutil
 
-import sys
-sys.path.append(os.path.dirname(__file__))
-
 from ae.utils.flags import FLAGS, home_out
 import ae.autoencoder as autoencoder
 from ae.utils.start_tensorboard import start
