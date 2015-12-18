@@ -24,4 +24,5 @@ NOTE: this will take a very long time if you are running on a CPU as opposed to 
 ```bash
 $ python code/run.py
 ```
-Navigate to [http://localhost:6006](http://localhost:6006) to explore TensorBoard and view the training progress.
+Navigate to <a href="http://localhost:6006" target="_blank">http://localhost:6006</a>
+to explore [TensorBoard](https://www.tensorflow.org/versions/master/how_tos/summaries_and_tensorboard/index.html#tensorboard-visualizing-learning) and view training progress.
