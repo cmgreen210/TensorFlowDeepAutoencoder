@@ -1,9 +1,9 @@
 #Deep Autoencoder with TensorFlow
 
-<figure class="image">
-   <img src="filters_1.png" alt="Some First Layer Filters"><figcaption>A selection of the first layer weight filters learned during the pretraining phase
-   </figcaption>
-</figure>
+<p align="center">
+   <img src="filters_1.png" alt="Some First Layer Filters"/>
+</p>
+-> A selection of the first layer weight filters learned during the pretraining phase <-
 ##Introduction
 The purpose of this repo is to explore the functionality of Google's recently open-sourced
 "sofware library for numerical computation using data flow graphs", 
