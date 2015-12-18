@@ -51,9 +51,9 @@ flags.DEFINE_integer('batch_size', 100,
 flags.DEFINE_float('supervised_learning_rate', 0.1,
                    'Supervised initial learning rate.')
 
-flags.DEFINE_integer('pretraining_epochs', 20,
+flags.DEFINE_integer('pretraining_epochs', 60,
                      "Number of training epochs for pretraining layers")
-flags.DEFINE_integer('finetuning_epochs', 36,
+flags.DEFINE_integer('finetuning_epochs', 56,
                      "Number of training epochs for "
                      "fine tuning supervised step")
 
