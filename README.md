@@ -3,7 +3,10 @@
 <p align="center">
    <img src="filters_1.png" alt="Some First Layer Filters"/>
 </p>
--> A selection of the first layer weight filters learned during the pretraining phase <-
+<p align="center">
+A selection of the first layer weight filters learned during the pretraining phase
+</p>
+
 ##Introduction
 The purpose of this repo is to explore the functionality of Google's recently open-sourced
 "sofware library for numerical computation using data flow graphs", 
