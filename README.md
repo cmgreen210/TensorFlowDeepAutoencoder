@@ -26,3 +26,4 @@ $ python code/run.py
 ```
 Navigate to <a href="http://localhost:6006" target="_blank">http://localhost:6006</a>
 to explore [TensorBoard](https://www.tensorflow.org/versions/master/how_tos/summaries_and_tensorboard/index.html#tensorboard-visualizing-learning) and view training progress.
+##Customizing
