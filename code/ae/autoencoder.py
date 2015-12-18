@@ -180,8 +180,8 @@ class AutoEncoder(object):
 
     out = self._activate(last_output, self._w(n), self._b(n, "_out"),
                          transpose_w=True)
-    out = tf.maximum(out, FLAGS.zero_bound)
-    out = tf.minimum(out, FLAGS.one_bound)
+    out = tf.maximum(out, 1.e-9)
+    out = tf.minimum(out, 1 - 1.e-9)
     return out
 
   def supervised_net(self, input_pl):
@@ -334,7 +334,9 @@ def main_unsupervised():
             image_summary_op = \
                 tf.image_summary("training_images",
                                  tf.reshape(input_,
-                                            (FLAGS.batch_size, 28, 28, 1)),
+                                            (FLAGS.batch_size,
+                                             FLAGS.image_size,
+                                             FLAGS.image_size, 1)),
                                  max_images=FLAGS.batch_size)
 
             summary_img_str = sess.run(image_summary_op,
@@ -426,7 +428,9 @@ def main_supervised(ae):
         summary_img_str = sess.run(
             tf.image_summary("training_images",
                              tf.reshape(input_pl,
-                                        (FLAGS.batch_size, 28, 28, 1)),
+                                        (FLAGS.batch_size,
+                                         FLAGS.image_size,
+                                         FLAGS.image_size, 1)),
                              max_images=FLAGS.batch_size),
             feed_dict=feed_dict
         )
