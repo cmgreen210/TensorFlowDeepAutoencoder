@@ -269,24 +269,22 @@ def main_unsupervised():
   with tf.Graph().as_default() as g:
     sess = tf.Session()
 
-    ae_shape = [FLAGS.image_pixels,
-                FLAGS.hidden1_units,
-                FLAGS.hidden2_units,
-                FLAGS.hidden3_units,
-                FLAGS.num_classes]
+    num_hidden = FLAGS.num_hidden_layers
+    ae_hidden_shapes = [getattr(FLAGS, "hidden{0}_units".format(j + 1))
+                        for j in xrange(num_hidden)]
+    ae_shape = [FLAGS.image_pixels] + ae_hidden_shapes + [FLAGS.num_classes]
 
     ae = AutoEncoder(ae_shape, sess)
 
     data = read_data_sets_pretraining(FLAGS.data_dir)
     num_train = data.train.num_examples
 
-    learning_rates = {0: FLAGS.pre_layer1_learning_rate,
-                      1: FLAGS.pre_layer2_learning_rate,
-                      2: FLAGS.pre_layer3_learning_rate}
+    learning_rates = {j: getattr(FLAGS,
+                                 "pre_layer{0}_learning_rate".format(j + 1))
+                      for j in xrange(num_hidden)}
 
-    noise = {0: FLAGS.noise_1,
-             1: FLAGS.noise_2,
-             2: FLAGS.noise_2}
+    noise = {j: getattr(FLAGS, "noise_{0}".format(j + 1))
+             for j in xrange(num_hidden)}
 
     for i in xrange(len(ae_shape) - 2):
       n = i + 1
