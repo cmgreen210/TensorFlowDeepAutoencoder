@@ -1,7 +1,7 @@
 #Deep Autoencoder with TensorFlow
 <p align="center">
-  <figure>
-    <img src="filters_1.png" alt="Some First Layer Filters" style="float: right;"/>
+  <figure align="center">
+    <img src="filters_1.png" alt="Some First Layer Filters">
     <figcaption>A selection of the first layer weight filters learned during the pretraining phase</figcaption>
   </figure>
 </p>
