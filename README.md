@@ -42,6 +42,12 @@ $ python code/run.py
 ```
 Navigate to <a href="http://localhost:6006" target="_blank">http://localhost:6006</a>
 to explore [TensorBoard](https://www.tensorflow.org/versions/master/how_tos/summaries_and_tensorboard/index.html#tensorboard-visualizing-learning) and view training progress.
+<p align="center">
+   <img src="tb_hist.png" alt="TensorBoard Histograms"/>
+</p>
+<p align="center">
+View of TensorBoard's display of weight and bias parameter progress.
+</p>
 ##Customizing
 You can play around with the run options, including the neural net size and shape, input corruption, learning rates, etc.
 in [flags.py](https://github.com/cmgreen210/TensorFlowDeepAutoencoder/blob/master/code/ae/utils/flags.py).
