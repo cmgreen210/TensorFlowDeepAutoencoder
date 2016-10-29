@@ -255,8 +255,8 @@ def loss_x_entropy(output, target):
     Scalar tensor of cross entropy
   """
   with tf.name_scope("xentropy_loss"):
-      net_output_tf = tf.ops.convert_to_tensor(output, name='input')
-      target_tf = tf.ops.convert_to_tensor(target, name='target')
+      net_output_tf = tf.convert_to_tensor(output, name='input')
+      target_tf = tf.convert_to_tensor(target, name='target')
       cross_entropy = tf.add(tf.mul(tf.log(net_output_tf, name='log_output'),
                                     target_tf),
                              tf.mul(tf.log(1 - net_output_tf),
