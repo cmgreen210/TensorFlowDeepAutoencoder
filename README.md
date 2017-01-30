@@ -23,7 +23,7 @@ the Docker installation instructions on the website. Then run:
 
 ```bash
 $ git clone https://github.com/cmgreen210/TensorFlowDeepAutoencoder
-$ cd TensorFlowDeeepAutoencoder
+$ cd TensorFlowDeepAutoencoder
 $ docker build -t tfdae -f cpu/Dockerfile .
 $ docker run -it -p 80:6006 tfdae python run.py
 ```
