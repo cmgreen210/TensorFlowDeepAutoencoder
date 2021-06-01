@@ -5,7 +5,7 @@ html5lib==0.999
 numpy==1.11.2
 requests==2.2.1
 six==1.10.0
-urllib3==1.7.1
+urllib3==1.26.5
 virtualenv==15.0.3
 wheel==0.24.0
 wsgiref==0.1.2
