@@ -9,4 +9,4 @@ urllib3==1.7.1
 virtualenv==15.0.3
 wheel==0.24.0
 wsgiref==0.1.2
-protobuf==3.0.0b2
+protobuf==3.18.3
